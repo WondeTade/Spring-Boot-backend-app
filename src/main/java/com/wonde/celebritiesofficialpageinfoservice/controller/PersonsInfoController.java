@@ -65,7 +65,7 @@ public class PersonsInfoController {
                                 .collect(Collectors.toList());
         return fieldErrorMessages;
     }
-    @PutMapping("/edit")
+    @PutMapping("update")
     public ResponseEntity<PersonsInfo> update(@RequestBody PersonsInfo personsInfo) {
         if (personInfoRepository.findById(personsInfo.getPersonId()).isPresent())
             return new ResponseEntity(personInfoRepository.save(personsInfo), HttpStatus.OK);
@@ -73,7 +73,7 @@ public class PersonsInfoController {
             return new ResponseEntity(personsInfo.badRequestMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/delete/{name}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id) {
         personInfoRepository.deleteById(id);
     }
