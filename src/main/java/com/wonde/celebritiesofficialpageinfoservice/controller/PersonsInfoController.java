@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/person/")
+@RequestMapping("api/v1/person")
 @CrossOrigin(origins = "*")
 public class PersonsInfoController {
 
@@ -33,22 +33,22 @@ public class PersonsInfoController {
         return personInfoRepository.findAll();
     }
 
-    @GetMapping("id/{id}")
+    @GetMapping("/id/{id}")
     public PersonsInfo getPersonDetailById(@PathVariable("id") Integer id) {
         return personInfoRepository.getOne(id);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/{name}")
     public Optional<List<PersonsInfo>> findByFullName(@PathVariable("name") String fullName) {
         return personInfoRepository.findByFullName(fullName);
     }
 
-    @GetMapping("status/{status}")
+    @GetMapping("/status/{status}")
     public Optional<List<PersonsInfo>> findByStatus(@PathVariable("status") String status) {
         return personInfoRepository.findByMaritalStatus(status);
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public PersonsInfo create(@Valid @RequestBody PersonsInfo personsInfo) {
             return personInfoRepository.save(personsInfo);
     }
@@ -65,7 +65,7 @@ public class PersonsInfoController {
                                 .collect(Collectors.toList());
         return fieldErrorMessages;
     }
-    @PutMapping("update")
+    @PutMapping("/update")
     public ResponseEntity<PersonsInfo> update(@RequestBody PersonsInfo personsInfo) {
         if (personInfoRepository.findById(personsInfo.getPersonId()).isPresent())
             return new ResponseEntity(personInfoRepository.save(personsInfo), HttpStatus.OK);
